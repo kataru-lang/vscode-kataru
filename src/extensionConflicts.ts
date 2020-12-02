@@ -32,14 +32,13 @@ export function showUninstallConflictsNotification(conflictingExts: Extension<an
   // Gather all the conflicting display names
   let conflictMsg = '';
   if (conflictingExts.length === 1) {
-    conflictMsg =
-      conflictingExts[0].packageJSON.displayName + ' extension is incompatible with VSCode-YAML. Please uninstall it.';
+    conflictMsg = `${conflictingExts[0].packageJSON.displayName} extension is incompatible with VSCode-YAML. Please uninstall it.`;
   } else {
     const extNames = [];
     conflictingExts.forEach((ext) => {
       extNames.push(ext.packageJSON.displayName);
     });
-    conflictMsg = 'The ' + extNames.join(', ') + ' extensions are incompatible with VSCode-YAML. Please uninstall them.';
+    conflictMsg = `The ${extNames.join(', ')} extensions are incompatible with VSCode-YAML. Please uninstall them.`;
   }
 
   window.showInformationMessage(conflictMsg, uninstallMsg).then((clickedMsg) => {
