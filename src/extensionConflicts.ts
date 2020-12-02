@@ -8,7 +8,7 @@ import { commands, Extension, extensions, window } from 'vscode';
 const conflictingIDs = new Set(['vscoss.vscode-ansible']);
 
 /**
- * Get all the extensions that currently conflict with VSCode-YAML
+ * Get all of the installed extensions that currently conflict with VSCode-YAML
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getConflictingExtensions(): Extension<any>[] {
