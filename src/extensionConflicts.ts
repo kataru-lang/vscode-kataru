@@ -13,9 +13,10 @@ const conflictingIDs = new Set(['vscoss.vscode-ansible']);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getConflictingExtensions(): Extension<any>[] {
   const conflictingExtensions = [];
-  extensions.all.forEach((extension) => {
-    if (conflictingIDs.has(extension.id)) {
-      conflictingExtensions.push(extension);
+  conflictingIDs.forEach((extension) => {
+    const ext = extensions.getExtension(extension);
+    if (ext) {
+      conflictingExtensions.push(ext);
     }
   });
   return conflictingExtensions;
