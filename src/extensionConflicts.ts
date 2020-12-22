@@ -5,7 +5,7 @@
 import { commands, Extension, extensions, window } from 'vscode';
 
 // A set of VSCode extension ID's that conflict with VSCode-YAML
-const conflictingIDs = new Set(['vscoss.vscode-ansible']);
+const conflictingIDs = new Set(['vscoss.vscode-ansible', 'ms-vscode-deploy-azure.azure-deploy']);
 
 /**
  * Get all of the installed extensions that currently conflict with VSCode-YAML
