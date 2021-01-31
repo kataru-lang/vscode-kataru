@@ -39,6 +39,7 @@
           "yaml"
         ],
         "extensions": [
+          ".ktr",
           ".yml",
           ".eyaml",
           ".eyml",
