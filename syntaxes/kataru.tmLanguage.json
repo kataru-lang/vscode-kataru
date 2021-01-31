@@ -12,10 +12,10 @@
       "include": "#directive"
     },
     {
-      "match": " (namespace|goto|set|choices|timeout):",
+      "match": " (goto|set|choices|timeout):",
       "captures": {
         "1": {
-          "name": "keyword.other"
+          "name": "storage.type.function"
         }
       }
     },
