@@ -12,7 +12,7 @@
       "include": "#directive"
     },
     {
-      "match": " (goto|set|choices|timeout):",
+      "match": " (input|goto|set|choices|timeout):",
       "captures": {
         "1": {
           "name": "storage.type.function"
