@@ -3,6 +3,7 @@
   "displayName": "Kataru",
   "description": "Kataru Language Support",
   "author": "Josiah Putman",
+  "publisher": "Kataru",
   "license": "MIT",
   "version": "0.14.0",
   "preview": true,
