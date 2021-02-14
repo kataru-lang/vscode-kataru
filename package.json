@@ -5,7 +5,7 @@
   "author": "Josiah Putman",
   "publisher": "Kataru",
   "license": "MIT",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "preview": true,
   "repository": {
     "type": "git",
@@ -77,12 +77,12 @@
           "type": "object",
           "default": {
             "https://kataru-schema.github.io/bookmark.json": [
-              "/kataru/bookmark.yml",
-              "/Kataru/bookmark.yml"
+              "*/bookmark.yml",
+              "*/Bookmark.yml"
             ],
             "https://kataru-schema.github.io/story.json": [
-              "/kataru/story/*.yml",
-              "/Kataru/story/*.yml"
+              "*/story/*.yml",
+              "*/Story/*.yml"
             ]
           },
           "description": "Associate schemas to YAML files in the current workspace"
