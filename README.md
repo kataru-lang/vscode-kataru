@@ -6,3 +6,5 @@ Based on YAML Language Support by Red Hat.
 Provides extended syntax highlighting and tooltips for Kataru files.
 
 For more about Kataru, see https://github.com/Katsutoshii/kataru.
+
+![screenshot](images/screen.png)
