@@ -9,7 +9,39 @@
 	"scopeName": "source.yaml",
 	"patterns": [
 		{
+			"match": "^(namespace|state|characters|commands|attributes):",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
+		},
+		{
+			"match": " (input|goto|set|choices|timeout|):",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
+		},
+		{
 			"include": "#comment"
+		},
+		{
+			"match": "\\$\\{([:a-zA-Z0-9_\\.]*)\\}",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
+		},
+		{
+			"match": " (if|else)",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				}
+			}
 		},
 		{
 			"include": "#property"
@@ -149,7 +181,15 @@
 				{
 					"begin": "^([ ]+)(?! )",
 					"end": "^(?!\\1|\\s*$)",
-					"name": "string.unquoted.block.yaml"
+					"name": "string.unquoted.block.yaml",
+					"patterns": [
+						{
+							"include": "#variable"
+						},
+						{
+							"include": "#attribute"
+						}
+					]
 				}
 			]
 		},
@@ -357,7 +397,7 @@
 							},
 							"contentName": "entity.name.tag.yaml",
 							"end": "(?x)\n                                (?=\n                                      \\s* $\n                                    | \\s+ \\#\n                                    | \\s* : (\\s|$)\n                                    | \\s* : [\\[\\]{},]\n                                    | \\s* [\\[\\]{},]\n                                )\n                            ",
-							"name": "string.unquoted.plain.in.yaml"
+							"name": "keyword.control"
 						}
 					]
 				},
@@ -469,7 +509,15 @@
 				{
 					"begin": "(?x)\n                          [^\\s[-?:,\\[\\]{}#&*!|>'\"%@`]]\n                        | [?:-] \\S\n                    ",
 					"end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                        )\n                    ",
-					"name": "string.unquoted.plain.out.yaml"
+					"name": "string.unquoted.plain.in.yaml",
+					"patterns": [
+						{
+							"include": "#variable"
+						},
+						{
+							"include": "#attribute"
+						}
+					]
 				}
 			]
 		},
@@ -616,6 +664,24 @@
 					"include": "#property"
 				}
 			]
+		},
+		"variable": {
+			"match": "(<\\w+>)([^<>]*)(<\\/\\w+>)",
+			"captures": {
+				"1": {
+					"name": "keyword.other"
+				},
+				"2": {
+					"name": "string.unquoted.plain.in.yaml"
+				},
+				"3": {
+					"name": "keyword.other"
+				}
+			}
+		},
+		"attribute": {
+			"match": "\\$\\{([:a-zA-Z0-9_\\.]*)\\}",
+			"name": "keyword.other"
 		}
 	}
 }

@@ -1,26 +1,15 @@
 {
-  "name": "vscode-yaml",
-  "displayName": "YAML",
-  "description": "YAML Language Support by Red Hat, with built-in Kubernetes syntax support",
-  "author": "Red Hat",
-  "contributors": [
-    {
-      "name": "Joshua Pinkney",
-      "email": "jpinkney@redhat.com"
-    },
-    {
-      "name": "Yevhen Vydolob",
-      "email": "yvydolob@redhat.com"
-    }
-  ],
+  "name": "vscode-kataru",
+  "displayName": "Kataru",
+  "description": "Kataru Language Support",
+  "author": "Josiah Putman",
+  "publisher": "Kataru",
   "license": "MIT",
-  "version": "0.15.0",
-  "publisher": "redhat",
+  "version": "0.1.5",
   "preview": true,
-  "bugs": "https://github.com/redhat-developer/vscode-yaml/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/redhat-developer/vscode-yaml"
+    "url": "https://github.com/Katsutoshii/vscode-kataru"
   },
   "icon": "icon/icon128.png",
   "engines": {
@@ -85,7 +74,16 @@
         },
         "yaml.schemas": {
           "type": "object",
-          "default": {},
+          "default": {
+            "https://kataru-schema.github.io/bookmark.json": [
+              "*/bookmark.yml",
+              "*/Bookmark.yml"
+            ],
+            "https://kataru-schema.github.io/story.json": [
+              "*/story/*.yml",
+              "*/Story/*.yml"
+            ]
+          },
           "description": "Associate schemas to YAML files in the current workspace"
         },
         "yaml.format.enable": {
@@ -154,7 +152,7 @@
           "comments": false,
           "strings": true
         },
-        "editor.autoIndent": false
+        "editor.autoIndent": "full"
       }
     }
   },
