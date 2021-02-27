@@ -56,6 +56,32 @@
 			"name": "meta.block-mapping.yaml",
 			"patterns": [
 				{
+					"include": "#comment"
+				},
+				{
+					"match": "^\\s*(if) (not )?([\\w\\.]*)(?: (?:>|>=|<|<=|==) ([\\w\\.]*))?:\\s*\\{\\s*([^:]*):( [\\w:]*)?\\s*\\}",
+					"captures": {
+						"1": {
+							"name": "keyword.control"
+						},
+						"2": {
+							"name": "keyword.control"
+						},
+						"3": {
+							"name": "keyword.other"
+						},
+						"4": {
+							"name": "keyword.other"
+						},
+						"5": {
+							"name": "keyword.other"
+						},
+						"6": {
+							"name": "variable.other.alias.yaml"
+						}
+					}
+				},
+				{
 					"match": "^\\s*([^:]*):( [\\w:]*)?",
 					"captures": {
 						"1": {
@@ -103,7 +129,24 @@
 			}
 		},
 		{
-			"match": " (if|else)",
+			"match": "\\s*(if) (not )?([\\w\\.]*)(?: (?:>|>=|<|<=|==) ([\\w\\.]*))?:",
+			"captures": {
+				"1": {
+					"name": "keyword.control"
+				},
+				"2": {
+					"name": "keyword.control"
+				},
+				"3": {
+					"name": "keyword.other"
+				},
+				"4": {
+					"name": "keyword.other"
+				}
+			}
+		},
+		{
+			"match": "\\s*(else):",
 			"captures": {
 				"1": {
 					"name": "keyword.control"
