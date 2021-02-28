@@ -9,7 +9,7 @@
 	"scopeName": "source.yaml",
 	"patterns": [
 		{
-			"match": "^(state|characters|commands|attributes|position):",
+			"match": "^(state|characters|commands|attributes|position|stack):",
 			"captures": {
 				"1": {
 					"name": "keyword.control"
