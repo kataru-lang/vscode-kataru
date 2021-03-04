@@ -9,7 +9,7 @@
 	"scopeName": "source.yaml",
 	"patterns": [
 		{
-			"match": "^(state|characters|commands|attributes|position|stack):",
+			"match": "^(state|characters|commands|attributes|position|stack|onPassage):",
 			"captures": {
 				"1": {
 					"name": "keyword.control"
@@ -121,7 +121,7 @@
 			"include": "#comment"
 		},
 		{
-			"match": "\\$\\{([:a-zA-Z0-9_\\.]*)\\}",
+			"match": "(\\$\\{(?:passage|character)\\})",
 			"captures": {
 				"1": {
 					"name": "keyword.control"
