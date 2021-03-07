@@ -101,12 +101,26 @@
       "include": "#comment"
     },
     {
-      "match": "(\\$(?:passage|character))(\\.)",
+      "match": "(\\$(?:passage|character))",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        }
+      }
+    },
+    {
+      "match": " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*) (\\+|-|=)",
       "captures": {
         "1": {
           "name": "keyword.control"
         },
         "2": {
+          "name": "variable.other"
+        },
+        "3": {
+          "name": "variable.other"
+        },
+        "4": {
           "name": "punctuation.separator"
         }
       }
@@ -547,9 +561,19 @@
           "include": "#flow-scalar-plain-in-implicit-type"
         },
         {
-          "begin": "(?x)\n                          [^\\s[-?:,\\[\\]{}#&*!|>'\"%@`]]\n                        | [?:-] [^\\s[\\[\\]{},]]\n                    ",
+          "begin": "(?x)\n                          (?:(\\$)|[^\\s[-?:,\\[\\]{}#&*!|>'\"%@`]])\n                        | [?:-] [^\\s[\\[\\]{},]]\n                    ",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.other"
+            }
+          },
           "end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                            | \\s* : [\\[\\]{},]\n                            | \\s* [\\[\\]{},]\n                        )\n                    ",
-          "name": "string.unquoted.plain.in.yaml"
+          "name": "string.unquoted.plain.in.yaml",
+          "patterns": [
+            {
+              "include": "#variable-no-bracket"
+            }
+          ]
         }
       ]
     },
@@ -599,7 +623,7 @@
             }
           },
           "end": "(?x)\n                        (?=\n                              \\s* $\n                            | \\s+ \\#\n                            | \\s* : (\\s|$)\n                        )\n                    ",
-          "name": "string.unquoted.plain.in.yaml",
+          "name": "string.unquoted.plain.out.yaml",
           "patterns": [
             {
               "include": "#variable"
@@ -801,7 +825,7 @@
       }
     },
     "conditional": {
-      "match": "\\s*((?:el)?if) (not )?(\\$[\\w\\.]+)(?: (?:>|>=|<|<=|==) ([\\w\\.]+))?:(?:\\s+\\{\\s*([^:]*):( [\\w:]*)?\\s*\\})?",
+      "match": "\\s*((?:el)?if) (not )?(\\$[\\w\\.]+)(?: (?:>|>=|<|<=|==) (?:([0-9]*\\.?[0-9])|([\\w\\.]+)))?:(?:\\s+\\{\\s*([^:]*):( [\\w:]*)?\\s*\\})?",
       "captures": {
         "1": {
           "name": "keyword.control"
@@ -813,12 +837,15 @@
           "name": "variable.other"
         },
         "4": {
-          "name": "keyword.other"
+          "name": "constant.numeric.float.yaml"
         },
         "5": {
           "name": "keyword.other"
         },
         "6": {
+          "name": "keyword.other"
+        },
+        "7": {
           "name": "entity.name.type"
         }
       }
