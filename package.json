@@ -5,7 +5,7 @@
   "author": "Josiah Putman",
   "publisher": "Kataru",
   "license": "MIT",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "preview": true,
   "repository": {
     "type": "git",
@@ -152,7 +152,7 @@
           "comments": false,
           "strings": true
         },
-        "editor.autoIndent": "full"
+        "editor.autoIndent": "advanced"
       }
     }
   },
