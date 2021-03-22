@@ -17,6 +17,20 @@
       }
     },
     {
+      "match": "^\\s*-\\s(?:(\\w+)(\\.))?(\\w+):\\s*(?={)",
+      "captures": {
+        "1": {
+          "name": "keyword.other"
+        },
+        "2": {
+          "name": "punctuation.separator"
+        },
+        "3": {
+          "name": "entity.name.function"
+        }
+      }
+    },
+    {
       "match": "^(namespace):(?:( global)|( \\w*))$",
       "captures": {
         "1": {
@@ -783,7 +797,7 @@
       ]
     },
     "attribute": {
-      "match": "((?<=<)|<)(\\w+>)([^<>]*)(<\\/\\w+>)",
+      "match": "((?<=<)|<)(\\/?[\\w\\s=%#\"^\\n]+>)",
       "captures": {
         "1": {
           "name": "keyword.other"
