@@ -123,7 +123,7 @@
       }
     },
     {
-      "match": " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*) (\\+|-|=)",
+      "match": " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*)(?:\\s(\\+|-|=))?:",
       "captures": {
         "1": {
           "name": "keyword.control"
