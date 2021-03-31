@@ -919,6 +919,22 @@
         },
         {
           "include": "#variable"
+        },
+        {
+          "match": "(\")",
+          "captures": {
+            "1": {
+              "name": "string.quoted.double.yaml"
+            }
+          }
+        },
+        {
+          "match": "\\b(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "string.unquoted.plain"
+            }
+          }
         }
       ]
     }
