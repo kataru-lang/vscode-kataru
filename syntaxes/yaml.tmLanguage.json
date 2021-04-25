@@ -39,12 +39,15 @@
       }
     },
     {
-      "match": " (input|set|timeout|return):",
+      "match": "\\s(input|timeout|return):",
       "captures": {
         "1": {
           "name": "keyword.control"
         }
       }
+    },
+    {
+      "include": "#set"
     },
     {
       "include": "#command"
@@ -799,8 +802,16 @@
         }
       }
     },
+    "boolean": {
+      "match": "(true|false)",
+      "captures": {
+        "1": {
+          "name": "constant.language.boolean.yaml"
+        }
+      }
+    },
     "number": {
-      "match": "([0-9]*\\.?[0-9])",
+      "match": "([\\+-]?[0-9]*\\.?[0-9])",
       "captures": {
         "1": {
           "name": "constant.numeric.float.yaml"
@@ -823,9 +834,52 @@
         }
       }
     },
+    "expression": {
+      "patterns": [
+        {
+          "match": "(?:([^:\\$\\{\\[,]+)):\\s",
+          "captures": {
+            "1": {
+              "name": "keyword.other"
+            }
+          }
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#boolean"
+        },
+        {
+          "include": "#comparator"
+        },
+        {
+          "include": "#boolean-op"
+        },
+        {
+          "include": "#variable"
+        },
+        {
+          "match": "(\")",
+          "captures": {
+            "1": {
+              "name": "string.quoted.double.yaml"
+            }
+          }
+        },
+        {
+          "match": "\\b(\\w+)\\b",
+          "captures": {
+            "1": {
+              "name": "string.unquoted.plain"
+            }
+          }
+        }
+      ]
+    },
     "command": {
-      "match": "^\\s*-\\s(?:([\\w:]+)(\\.))?((?!set)\\w+):\\s*(?=[{\\[])",
-      "captures": {
+      "begin": "^\\s*-\\s(?:([\\w:]+)(\\.))?((?!set)\\w+):\\s*(?=[{\\[])",
+      "beginCaptures": {
         "1": {
           "name": "keyword.other"
         },
@@ -835,10 +889,41 @@
         "3": {
           "name": "entity.name.function"
         }
-      }
+      },
+      "patterns": [
+        {
+          "include": "#expression"
+        }
+      ],
+      "end": "[\\]\\}]\n"
+    },
+    "set": {
+      "begin": "^\\s*-\\s(set):",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control"
+        }
+      },
+      "end": "^\\s*(?:(?:(timeout):\\s?([0-9]*\\.?[0-9])?)|(-)|(?=else)|(?:$))",
+      "endCaptures": {
+        "1": {
+          "name": "keyword.control"
+        },
+        "2": {
+          "name": "constant.numeric.float.yaml"
+        },
+        "3": {
+          "name": "punctuation.definition.block.sequence.item.yaml"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#expression"
+        }
+      ]
     },
     "choices": {
-      "begin": " (choices):",
+      "begin": "\\s(choices):",
       "beginCaptures": {
         "1": {
           "name": "keyword.control"
@@ -853,7 +938,7 @@
           "include": "#conditional"
         },
         {
-          "match": "^\\s*([^:]*):( [\\w:]*)?",
+          "match": "^\\s*([^:]*):(\\s[\\w:]*)?",
           "captures": {
             "1": {
               "name": "keyword.other"
@@ -864,7 +949,7 @@
           }
         }
       ],
-      "end": "^\\s*(?:(?:(timeout): ?([0-9]*\\.?[0-9])?)|(-)|(?=else)|(?:$))",
+      "end": "^\\s*(?:(?:(timeout):\\s?([0-9]*\\.?[0-9])?)|(-)|(?=else)|(?:$))",
       "endCaptures": {
         "1": {
           "name": "keyword.control"
@@ -878,7 +963,7 @@
       }
     },
     "call-goto": {
-      "match": " (goto|call): ([\\w:]*)$",
+      "match": " (goto|call):\\s([\\w:]*)$",
       "captures": {
         "1": {
           "name": "keyword.control"
