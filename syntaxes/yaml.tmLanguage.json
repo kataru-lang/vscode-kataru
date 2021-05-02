@@ -811,7 +811,7 @@
       }
     },
     "number": {
-      "match": "([\\+-]?[0-9]*\\.?[0-9])",
+      "match": "(?<=[\\s\\[])([\\+-]?[0-9]*\\.?[0-9])(?=[\\s\\]])",
       "captures": {
         "1": {
           "name": "constant.numeric.float.yaml"
@@ -860,15 +860,15 @@
           "include": "#variable"
         },
         {
-          "match": "(\")",
+          "match": "(\"[^\"]*\")",
           "captures": {
             "1": {
-              "name": "string.quoted.double.yaml"
+              "name": "string.quoted.plain"
             }
           }
         },
         {
-          "match": "\\b(\\w+)\\b",
+          "match": "(?<=[\\s\\[])([^\\$\\[\\{\\s]+[^,])(?=[,\\s\\]\\}])",
           "captures": {
             "1": {
               "name": "string.unquoted.plain"
