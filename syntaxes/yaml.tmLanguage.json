@@ -780,7 +780,7 @@
       ]
     },
     "variable": {
-      "match": "\\s*((?<=\\$)|\\$)(?:([A-Za-z]+):)?(?:(\\w+)\\.)?(\\w+)(?:\\s[\\+-])?",
+      "match": "\\s*((?<=\\$)|\\$)(?:([A-Za-z]+):)?(?:([A-Za-z]+\\w*)\\.)?([A-Za-z]+\\w*)(?:\\s[\\+-])?",
       "captures": {
         "1": {
           "name": "variable.other"
@@ -872,6 +872,9 @@
       "patterns": [
         {
           "include": "#expression"
+        },
+        {
+          "include": "#comment"
         }
       ],
       "end": "[\\]\\}](?=(\\s+[^\n]*)?\n)"
