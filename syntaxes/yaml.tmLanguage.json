@@ -972,19 +972,22 @@
       }
     },
     "conditional": {
-      "begin": "\\s*((?:el)?if)\\s",
+      "begin": "\\s*((?:el)?if)\\s(?=(?:[^:]+:))",
       "beginCaptures": {
         "1": {
           "name": "keyword.control"
         }
       },
-      "end": ":(?:\\s+\\{\\s*([^:]*):(\\s[\\w:]*)?\\s*\\})?$",
+      "end": ":(?:\\s+\\{\\s*([^:]*):(\\s[\\w:]*)?\\s*\\})?",
       "endCaptures": {
         "1": {
           "name": "keyword.other"
         },
         "2": {
           "name": "entity.name.type"
+        },
+        "3": {
+          "name": "punctuation.whitespace.comment.leading.yaml"
         }
       },
       "patterns": [
@@ -1008,6 +1011,9 @@
         },
         {
           "include": "#expr-unquoted-string"
+        },
+        {
+          "include": "#comment"
         }
       ]
     }
