@@ -11,7 +11,7 @@
       "stopOnEntry": false,
       "sourceMaps": true,
       "outFiles": ["${workspaceRoot}/out/src/**/*.js"],
-      "preLaunchTask": "compile typescript"
+      "preLaunchTask": "Compile"
     },
     {
       // A launch configuration that compiles the extension and runs mocha unit tests
@@ -20,7 +20,7 @@
       "name": "Launch Tests",
       "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
       "args": ["-u", "tdd", "--timeout", "999999", "--colors", "-r", "ts-node/register", "${workspaceRoot}/test/*.test.ts"],
-      "preLaunchTask": "compile typescript"
+      "preLaunchTask": "Compile"
     },
     {
       "name": "Extension Tests",

@@ -1,8 +1,6 @@
 {
   "information_for_contributors": [
-    "This file has been converted from https://github.com/textmate/yaml.tmbundle/blob/master/Syntaxes/YAML.tmLanguage",
-    "If you want to provide a fix or improvement, please create a pull request against the original repository.",
-    "Once accepted there, we are happy to receive an update request."
+    "Modified conversion of https://github.com/textmate/yaml.tmbundle/blob/master/Syntaxes/YAML.tmLanguage"
   ],
   "version": "https://github.com/textmate/yaml.tmbundle/commit/e54ceae3b719506dba7e481a77cea4a8b576ae46",
   "name": "YAML",
@@ -345,7 +343,7 @@
           "name": "invalid.illegal.character.anchor.yaml"
         }
       },
-      "match": "((\\*))([^\\s\\[\\]\/{\/},]+)([^\\s\\]},]\\S*)?"
+      "match": "((\\*))([^\\s\\[\\]/{/},]+)([^\\s\\]},]\\S*)?"
     },
     "flow-collection": {
       "patterns": [
@@ -928,7 +926,7 @@
           "include": "#conditional"
         },
         {
-          "match": "^\\s*([^:]*):(\\s[\\w:]*)?",
+          "match": "^\\s*([^:]*):(\\s[\\w:!|,\\.]*)?",
           "captures": {
             "1": {
               "name": "keyword.other"
@@ -953,7 +951,7 @@
       }
     },
     "call-goto": {
-      "match": " (goto|call):\\s([\\w:]*)$",
+      "match": " (goto|call):\\s([\\w:!|,\\.]*)$",
       "captures": {
         "1": {
           "name": "keyword.control"
