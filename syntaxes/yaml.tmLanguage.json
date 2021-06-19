@@ -15,7 +15,7 @@
       }
     },
     {
-      "match": "^(namespace):(?:( global)|( \\w*))$",
+      "match": "^(namespace):(?:( global)|(\\s\\w*))$",
       "captures": {
         "1": {
           "name": "keyword.control"
@@ -505,6 +505,15 @@
       "name": "string.quoted.double.yaml",
       "patterns": [
         {
+          "include": "#variable-context"
+        },
+        {
+          "include": "#variable"
+        },
+        {
+          "include": "#attribute"
+        },
+        {
           "match": "\\\\([0abtnvfre \"/\\\\N_Lp]|x\\d\\d|u\\d{4}|U\\d{8})",
           "name": "constant.character.escape.yaml"
         },
@@ -742,7 +751,7 @@
       ]
     },
     "attribute": {
-      "match": "((?<=<)|<)(\\/?[\\w\\s=%#\"^\\n]+>)",
+      "match": "((?<=<)|<)(\\/?[\\w\\s=%#\"^\\n\\\\.]+>)",
       "captures": {
         "1": {
           "name": "keyword.other"
