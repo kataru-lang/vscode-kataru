@@ -7,42 +7,16 @@
   "scopeName": "source.yaml",
   "patterns": [
     {
-      "match": "^(state|characters|commands|attributes|position|stack|onEnter|onExit):",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        }
-      }
+      "include": "#kataru-config"
     },
     {
-      "match": "^(namespace):(?:( global)|(\\s\\w*))$",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        },
-        "2": {
-          "name": "keyword.control"
-        },
-        "3": {
-          "name": "entity.name.type"
-        }
-      }
+      "include": "#kataru-namespace"
     },
     {
-      "match": "^(\\w+):",
-      "captures": {
-        "1": {
-          "name": "entity.name.type"
-        }
-      }
+      "include": "#passage-name"
     },
     {
-      "match": "\\s(input|timeout|return):",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        }
-      }
+      "include": "#kataru-keywords"
     },
     {
       "include": "#set"
@@ -54,35 +28,13 @@
       "include": "#choices"
     },
     {
-      "include": "#call-goto"
-    },
-    {
       "include": "#comment"
     },
     {
-      "match": "(\\$(?:passage|character))\\.",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        }
-      }
+      "include": "#call-goto"
     },
     {
-      "match": " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*)(?:\\s(\\+|-|=))?:",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        },
-        "2": {
-          "name": "variable.other"
-        },
-        "3": {
-          "name": "variable.other"
-        },
-        "4": {
-          "name": "punctuation.separator"
-        }
-      }
+      "include": "#state-expansion"
     },
     {
       "include": "#conditional"
@@ -812,7 +764,7 @@
       }
     },
     "number": {
-      "match": "(?<=[\\s\\[])([\\+-]?[0-9]+\\.?[0-9]*)(?=[:\\s\\]])",
+      "match": "(?<=[\\s\\[])([\\+-]?[0-9]+\\.?[0-9]*)(?=[,:\\s\\]])",
       "captures": {
         "1": {
           "name": "constant.numeric.float.yaml"
@@ -832,6 +784,61 @@
       "captures": {
         "1": {
           "name": "keyword.control"
+        }
+      }
+    },
+    "kataru-config": {
+      "match": "^(state|characters|commands|attributes|position|stack|onEnter|onExit):",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        }
+      }
+    },
+    "kataru-namespace": {
+      "match": "^(namespace):(?:(\\sglobal)|(\\s\\w*))$",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        },
+        "2": {
+          "name": "keyword.control"
+        },
+        "3": {
+          "name": "entity.name.type"
+        }
+      }
+    },
+    "kataru-keywords": {
+      "match": "\\s(input|timeout|return):",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        }
+      }
+    },
+    "passage-name": {
+      "match": "^([\\w\\|]+):",
+      "captures": {
+        "1": {
+          "name": "entity.name.type"
+        }
+      }
+    },
+    "state-expansion": {
+      "match": " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*)(?:\\s(\\+|-|=))?:",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        },
+        "2": {
+          "name": "variable.other"
+        },
+        "3": {
+          "name": "variable.other"
+        },
+        "4": {
+          "name": "punctuation.separator"
         }
       }
     },
@@ -895,7 +902,7 @@
       }
     },
     "expr-unquoted-string": {
-      "match": "(?<=[\\s\\[])([^\\$\\[\\{\\s]+[^,\\s\\]\\}])(?=[:,\\s\\]\\}])",
+      "match": "(?<=[\\s\\[])([^\\$\\[\\{\\s]+[^:,\\s\\]\\}])(?=[:,\\s\\]\\}])",
       "captures": {
         "1": {
           "name": "string.unquoted.plain"
@@ -920,13 +927,18 @@
       ]
     },
     "choices": {
-      "begin": "\\s(choices):",
+      "begin": "(\\s+)(-)\\s(choices):",
       "beginCaptures": {
         "1": {
+          "name": "punctuation.whitespace"
+        },
+        "2": null,
+        "3": {
           "name": "keyword.control"
-        }
+        },
+        "name": "punctuation.separator"
       },
-      "name": "meta.block-mapping.yaml",
+      "end": "^(?!\\1\\s{4}\\s*)",
       "patterns": [
         {
           "include": "#comment"
@@ -935,32 +947,26 @@
           "include": "#conditional"
         },
         {
-          "match": "^\\s*([^:]*):(\\s[\\w:!|,\\.]*)?",
-          "captures": {
-            "1": {
-              "name": "keyword.other"
-            },
-            "2": {
-              "name": "entity.name.type"
-            }
-          }
+          "include": "#choice"
+        },
+        {
+          "include": "#node"
         }
-      ],
-      "end": "^\\s*(?:(?:(timeout):\\s?([0-9]*\\.?[0-9])?)|(-)|(?=else)|(?:$))",
-      "endCaptures": {
+      ]
+    },
+    "choice": {
+      "match": "(?:^|\\{)\\s+([^:-]+):\\s([\\w:!|,\\.]+)$",
+      "captures": {
         "1": {
-          "name": "keyword.control"
+          "name": "keyword.other"
         },
         "2": {
-          "name": "constant.numeric.float.yaml"
-        },
-        "3": {
-          "name": "punctuation.definition.block.sequence.item.yaml"
+          "name": "entity.name.type"
         }
       }
     },
     "call-goto": {
-      "match": " (goto|call):\\s([\\w:!|,\\.]*)$",
+      "match": "\\s(goto|call|default):\\s([\\w:!|,\\.]*)$",
       "captures": {
         "1": {
           "name": "keyword.control"
