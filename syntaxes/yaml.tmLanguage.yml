@@ -8,18 +8,7 @@ patterns:
 - include: "#kataru-config"
 - include: "#kataru-namespace"
 - include: "#passage-name"
-- include: "#kataru-keywords"
-- include: "#set"
-- include: "#command"
-- include: "#choices"
-- include: "#comment"
-- include: "#call-goto"
-- include: "#state-expansion"
-- include: "#conditional"
-- match: "\\s*(else):"
-  captures:
-    '1':
-      name: keyword.control
+- include: "#kataru-lines"
 - include: "#property"
 - include: "#directive"
 - match: "^---"
@@ -617,6 +606,7 @@ repository:
     - include: "#comment"
     - include: "#conditional"
     - include: "#choice"
+    - include: "#kataru-lines"
     - include: "#node"
   choice:
     match:  "(?:^|\\{)\\s+([^:-]+):\\s([\\w:!|,\\.]+)$"
@@ -659,3 +649,19 @@ repository:
     - include: "#expr-quoted-string"
     - include: "#expr-unquoted-string"
     - include: "#comment"
+  kataru-else:
+    match: "\\s*(else):"
+    captures:
+      '1':
+        name: keyword.control
+  kataru-lines:
+    patterns:
+      - include: "#kataru-keywords"
+      - include: "#set"
+      - include: "#command"
+      - include: "#choices"
+      - include: "#comment"
+      - include: "#call-goto"
+      - include: "#state-expansion"
+      - include: "#conditional"
+      - include: "#kataru-else"

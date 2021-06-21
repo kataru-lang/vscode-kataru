@@ -16,36 +16,7 @@
       "include": "#passage-name"
     },
     {
-      "include": "#kataru-keywords"
-    },
-    {
-      "include": "#set"
-    },
-    {
-      "include": "#command"
-    },
-    {
-      "include": "#choices"
-    },
-    {
-      "include": "#comment"
-    },
-    {
-      "include": "#call-goto"
-    },
-    {
-      "include": "#state-expansion"
-    },
-    {
-      "include": "#conditional"
-    },
-    {
-      "match": "\\s*(else):",
-      "captures": {
-        "1": {
-          "name": "keyword.control"
-        }
-      }
+      "include": "#kataru-lines"
     },
     {
       "include": "#property"
@@ -950,6 +921,9 @@
           "include": "#choice"
         },
         {
+          "include": "#kataru-lines"
+        },
+        {
           "include": "#node"
         }
       ]
@@ -1027,6 +1001,45 @@
         },
         {
           "include": "#comment"
+        }
+      ]
+    },
+    "kataru-else": {
+      "match": "\\s*(else):",
+      "captures": {
+        "1": {
+          "name": "keyword.control"
+        }
+      }
+    },
+    "kataru-lines": {
+      "patterns": [
+        {
+          "include": "#kataru-keywords"
+        },
+        {
+          "include": "#set"
+        },
+        {
+          "include": "#command"
+        },
+        {
+          "include": "#choices"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#call-goto"
+        },
+        {
+          "include": "#state-expansion"
+        },
+        {
+          "include": "#conditional"
+        },
+        {
+          "include": "#kataru-else"
         }
       ]
     }
