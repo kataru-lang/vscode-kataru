@@ -482,16 +482,8 @@ repository:
     patterns:
     - include: "#variable"
   variable:
-    match: "\\s*((?<=\\$)|\\$)(?:([A-Za-z]+):)?(?:([A-Za-z]+\\w*)\\.)?([A-Za-z]+\\w*)(?:\\s[\\+-])?"
-    captures:
-      '1':
-        name: variable.other
-      '2':
-        name: variable.other
-      '3':
-        name: variable.other
-      '4':
-        name: variable.other
+    match: "\\s*(?:(?<=\\$)|\\$)(?:[A-Za-z]\\w*:)*(?:[A-Za-z]\\w*\\.)?(?:[A-Za-z]\\w*)(?:\\s[\\+-])?"
+    name: variable.other
   boolean:
     match: "(true|false)"
     captures:
@@ -518,7 +510,7 @@ repository:
       '1':
         name: keyword.control
   kataru-namespace:
-    match: "^(namespace):(?:(\\sglobal)|(\\s\\w*))$"
+    match: "^(namespace):(?:(\\sglobal)|(\\s[\\w:]*))$"
     captures:
       '1':
         name: keyword.control
