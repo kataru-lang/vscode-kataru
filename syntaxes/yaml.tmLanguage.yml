@@ -6,6 +6,8 @@ name: YAML
 scopeName: source.yaml
 patterns:
 - include: "#kataru-config"
+- include: "#state"
+- include: "#command-defs"
 - include: "#kataru-namespace"
 - include: "#passage-name"
 - include: "#kataru-lines"
@@ -482,8 +484,17 @@ repository:
     patterns:
     - include: "#variable"
   variable:
-    match: "\\s*(?:(?<=\\$)|\\$)(?:[A-Za-z]\\w*:)*(?:[A-Za-z]\\w*\\.)?(?:[A-Za-z]\\w*)(?:\\s[\\+-])?"
-    name: variable.other
+    # match: "(?:(?<=\\$)|\\$)(?:[A-Za-z]\\w*:)*(?:[A-Za-z]\\w*\\.)?(?:[A-Za-z]\\w*)(?:\\s[\\+-])?"
+    match: "(?:(\\$(?:passage|character))(\\.[A-Za-z]\\w*)|((?:(?<=\\$)|\\$)(?:[A-Za-z]\\w*:)*(?:[A-Za-z]\\w*\\.)?(?:[A-Za-z]\\w*)))(?:\\s[\\+-])?"
+    captures:
+      '1':
+        name: keyword.control
+      '2':
+        name: variable.other
+      '3':
+        name: variable.other
+      '4':
+        name: variable.other
   boolean:
     match: "(true|false)"
     captures:
@@ -505,7 +516,7 @@ repository:
       '1':
         name: keyword.control
   kataru-config:
-    match: "^(state|characters|commands|attributes|position|stack|onEnter|onExit):"
+    match: "^(characters|attributes|position|stack|onEnter|onExit):"
     captures:
       '1':
         name: keyword.control
@@ -528,8 +539,21 @@ repository:
     captures:
       '1':
         name: entity.name.type
-  state-expansion:
-    match: " (?:(\\$(?:passage|character))|(\\$[A-Za-z]+))([:\\w\\.]*)(?:\\s(\\+|-|=))?:"
+  state:
+    begin: "(state):"
+    beginCaptures:
+      '1':
+        name: keyword.control
+    end: "^(?=\\S)"
+    patterns:
+    - include: "#var-def"
+    - include: "#comment"
+    - include: "#number"
+    - include: "#boolean"
+    - include: "#expr-quoted-string"
+    - include: "#expr-unquoted-string"
+  var-def:
+    match: "(?:(\\$(?:passage|character))(\\.))?([A-Za-z]\\w*):"
     captures:
       '1':
         name: keyword.control
@@ -537,8 +561,30 @@ repository:
         name: variable.other
       '3':
         name: variable.other
-      '4':
+  command-defs:
+    begin: "(commands):"
+    beginCaptures:
+      '1':
+        name: keyword.control
+    end: "^(?=\\S)"
+    patterns:
+    - include: "#command-def"
+    - include: "#comment"
+  command-def:
+    begin: "(\\s+)(?:(\\$(?:passage|character))(\\.))?([A-Za-z]\\w*):"
+    beginCaptures:
+      '1':
+        name: punctuation.whitespace
+      '2':
+        name: keyword.control
+      '3':
         name: punctuation.separator
+      '4':
+        name: entity.name.function
+    patterns:
+    - include: "#comment"
+    - include: "#expression"
+    end: "^(?!\\1\\s{2}\\s*)"
   expression:
     patterns:
     - include: "#variable"
@@ -601,7 +647,7 @@ repository:
     - include: "#kataru-lines"
     - include: "#node"
   choice:
-    match:  "(?:^|\\{)\\s+([^:-]+):\\s([\\w:!|,\\.]+)$"
+    match:  "(?:^|\\{)\\s+([^:]+):\\s([\\w:!|,\\.]+)$"
     captures:
       '1':
         name: keyword.other
@@ -654,6 +700,5 @@ repository:
       - include: "#choices"
       - include: "#comment"
       - include: "#call-goto"
-      - include: "#state-expansion"
       - include: "#conditional"
       - include: "#kataru-else"
